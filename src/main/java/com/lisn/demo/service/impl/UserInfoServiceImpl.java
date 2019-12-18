@@ -1,16 +1,12 @@
 package com.lisn.demo.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.lisn.demo.core.ret.ServiceException;
 import com.lisn.demo.core.universal.AbstractService;
-import com.lisn.demo.dao.UserInfoMapper;
+import com.lisn.demo.dao.db1.UserInfoMapper;
 import com.lisn.demo.model.UserInfo;
 import com.lisn.demo.service.UserInfoService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @Service
 public class UserInfoServiceImpl extends AbstractService<UserInfo> implements UserInfoService {

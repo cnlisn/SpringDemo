@@ -19,25 +19,25 @@ import javax.sql.DataSource;
  * mapperScannerConfigurer.setBasePackage("com.example.demo.dao");表示dao层的存储路径
  */
 
-@Configuration
-public class MybatisConfigurer {
-
-    @Bean
-    public SqlSessionFactory sqlSessionFactoryBean(DataSource dataSource) throws Exception {
-        SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
-        factory.setDataSource(dataSource);
-        factory.setTypeAliasesPackage("com.lisn.demo.model");
-        // 添加XML目录
-        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        factory.setMapperLocations(resolver.getResources("classpath:mapper/*.xml"));
-        return factory.getObject();
-    }
-
-    @Bean
-    public MapperScannerConfigurer mapperScannerConfigurer() {
-        MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-        mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactoryBean");
-        mapperScannerConfigurer.setBasePackage("com.lisn.demo.dao");
-        return mapperScannerConfigurer;
-    }
-}
+//@Configuration
+//public class MybatisConfigurer {
+//
+//    @Bean
+//    public SqlSessionFactory sqlSessionFactoryBean(DataSource dataSource) throws Exception {
+//        SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
+//        factory.setDataSource(dataSource);
+//        factory.setTypeAliasesPackage("com.lisn.demo.model");
+//        // 添加XML目录
+//        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+//        factory.setMapperLocations(resolver.getResources("classpath:mapper/*.xml"));
+//        return factory.getObject();
+//    }
+//
+//    @Bean
+//    public MapperScannerConfigurer mapperScannerConfigurer() {
+//        MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
+//        mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactoryBean");
+//        mapperScannerConfigurer.setBasePackage("com.lisn.demo.dao");
+//        return mapperScannerConfigurer;
+//    }
+//}
