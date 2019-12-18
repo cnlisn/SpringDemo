@@ -9,6 +9,7 @@ import com.alibaba.druid.support.http.WebStatFilter;
 
 /**
  * Druid监控配置
+ * 地址：http://localhost:8080/druid
  */
 @Configuration
 public class DruidMonitorConfigurer {
