@@ -19,6 +19,13 @@
     </properties>
 
     <dependencies>
+        <!--添加Jsoup依赖-->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.10.2</version>
+        </dependency>
+
         <!--添加Redis依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
