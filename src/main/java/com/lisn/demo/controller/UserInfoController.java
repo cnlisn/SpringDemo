@@ -1,13 +1,12 @@
 package com.lisn.demo.controller;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.lisn.demo.core.ret.RetResponse;
 import com.lisn.demo.core.ret.RetResult;
+import com.lisn.demo.core.ret.RetResponse;
 import com.lisn.demo.core.ret.ServiceException;
 import com.lisn.demo.model.UserInfo;
 import com.lisn.demo.service.UserInfoService;
-
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -21,22 +20,36 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
+ * @author SG
+ * @Description: UserInfoController类
  * Controller中@RestController注解的作用：
- *
  * @RestController是由@Controller和@ResponseBody组成， 表示该类是controller和返回的结果为JSON数据，不是页面路径。
+ * @date 2019/12/19 10:45
  */
 @RestController
-@RequestMapping("userInfo")
+@RequestMapping("/userInfo")
 @Api(tags = {"用户操作接口"}, description = "userInfoControler")
 public class UserInfoController {
 
     @Resource
     private UserInfoService userInfoService;
 
-    //@GetMapping("/hello")
-    @PostMapping("/hello")
-    public String hello() {
-        return "hello SpringBoot";
+    @PostMapping("/insert")
+    public RetResult<Integer> insert(UserInfo userInfo) throws Exception {
+        Integer state = userInfoService.insert(userInfo);
+        return RetResponse.makeOKRsp(state);
+    }
+
+    @PostMapping("/deleteById")
+    public RetResult<Integer> deleteById(@RequestParam String id) throws Exception {
+        Integer state = userInfoService.deleteById(id);
+        return RetResponse.makeOKRsp(state);
+    }
+
+    @PostMapping("/update")
+    public RetResult<Integer> update(UserInfo userInfo) throws Exception {
+        Integer state = userInfoService.update(userInfo);
+        return RetResponse.makeOKRsp(state);
     }
 
     @ApiOperation(value = "查询用户", notes = "根据用户ID查询用户")
@@ -45,7 +58,7 @@ public class UserInfoController {
                     dataType = "Integer", paramType = "query")
     })
     @PostMapping("/selectById")
-    public RetResult<UserInfo> selectById(@RequestParam String id) {
+    public RetResult<UserInfo> selectById(@RequestParam String id) throws Exception {
         UserInfo userInfo = userInfoService.selectById(id);
         System.out.println("selectById==" + id + " userInfo=" + userInfo);
         RetResult<UserInfo> result;
@@ -58,54 +71,45 @@ public class UserInfoController {
         return result;
     }
 
-
-    @PostMapping("/testException")
-    public RetResult<UserInfo> testException(String id) {
-        List a = null;
-        a.size();
-        UserInfo userInfo = userInfoService.selectById(id);
-        return RetResponse.makeOKRsp(userInfo);
-    }
-
     /**
      * //当前页
-     * private int pageNum;
-     * //每页的数量
-     * private int pageSize;
-     * //当前页的数量
-     * private int size;
-     * //当前页面第一个元素在数据库中的行号
-     * private int startRow;
-     * //当前页面最后一个元素在数据库中的行号
-     * private int endRow;
-     * //总记录数
-     * private long total;
-     * //总页数
-     * private int pages;
-     * //结果集
-     * private List<T> list;
-     * //第一页
-     * private int firstPage;
-     * //前一页
-     * private int prePage;
-     * //是否为第一页
-     * private boolean isFirstPage;
-     * //是否为最后一页
-     * private boolean isLastPage;
-     * //是否有前一页
-     * private boolean hasPreviousPage;
-     * //是否有下一页
-     * private boolean hasNextPage;
-     * //导航页码数
-     * private int navigatePages;
-     * //所有导航页号
-     * private int[] navigatepageNums;
+     * * private int pageNum;
+     * * //每页的数量
+     * * private int pageSize;
+     * * //当前页的数量
+     * * private int size;
+     * * //当前页面第一个元素在数据库中的行号
+     * * private int startRow;
+     * * //当前页面最后一个元素在数据库中的行号
+     * * private int endRow;
+     * * //总记录数
+     * * private long total;
+     * * //总页数
+     * * private int pages;
+     * * //结果集
+     * * private List<T> list;
+     * * //第一页
+     * * private int firstPage;
+     * * //前一页
+     * * private int prePage;
+     * * //是否为第一页
+     * * private boolean isFirstPage;
+     * * //是否为最后一页
+     * * private boolean isLastPage;
+     * * //是否有前一页
+     * * private boolean hasPreviousPage;
+     * * //是否有下一页
+     * * private boolean hasNextPage;
+     * * //导航页码数
+     * * private int navigatePages;
+     * * //所有导航页号
+     * * private int[] navigatepageNums;
      *
-     * @param page
-     * @param size
-     * @return
+     * @param page 页码
+     * @param size 每页条数
+     * @Description: 分页查询
+     * @Reutrn RetResult<PageInfo       <       UserInfo>>
      */
-
     @ApiOperation(value = "查询用户", notes = "分页查询用户所有")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "当前页码",
@@ -113,14 +117,12 @@ public class UserInfoController {
             @ApiImplicitParam(name = "size", value = "每页显示条数",
                     dataType = "Integer", paramType = "query")
     })
-    @PostMapping("/selectAll")
-    public RetResult<PageInfo<UserInfo>> selectAll(@RequestParam(defaultValue = "0") Integer page,
-                                                   @RequestParam(defaultValue = "0") Integer size) {
+    @PostMapping("/list")
+    public RetResult<PageInfo<UserInfo>> list(@RequestParam(defaultValue = "0") Integer page,
+                                              @RequestParam(defaultValue = "0") Integer size) throws Exception {
         PageHelper.startPage(page, size);
-//        PageInfo<UserInfo> userInfoList = userInfoService.selectAll(page, size);
-        List<UserInfo> userInfoList = userInfoService.selectAll();
-        PageInfo<UserInfo> pageInfo = new PageInfo<>(userInfoList);
+        List<UserInfo> list = userInfoService.selectAll();
+        PageInfo<UserInfo> pageInfo = new PageInfo<UserInfo>(list);
         return RetResponse.makeOKRsp(pageInfo);
     }
-
 }
