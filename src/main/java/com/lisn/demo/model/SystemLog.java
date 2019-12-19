@@ -60,6 +60,18 @@ public class SystemLog {
     private Date createTime;
 
     /**
+     * 日志类型为正常
+     */
+    @Transient
+    public static final String LOGINFO = "0";
+
+    /**
+     * 日志类型为异常
+     */
+    @Transient
+    public static final String LOGERROR = "1";
+
+    /**
      * @return id
      */
     public String getId() {
@@ -229,5 +241,21 @@ public class SystemLog {
      */
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @Override
+    public String toString() {
+        return "SystemLog{" +
+                "id='" + id + '\'' +
+                ", description='" + description + '\'' +
+                ", method='" + method + '\'' +
+                ", logType='" + logType + '\'' +
+                ", requestIp='" + requestIp + '\'' +
+                ", exceptionCode='" + exceptionCode + '\'' +
+                ", exceptionDetail='" + exceptionDetail + '\'' +
+                ", params='" + params + '\'' +
+                ", userId='" + userId + '\'' +
+                ", createTime=" + createTime +
+                '}';
     }
 }

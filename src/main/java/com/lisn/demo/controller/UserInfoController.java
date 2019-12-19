@@ -1,5 +1,6 @@
 package com.lisn.demo.controller;
 
+import com.lisn.demo.core.aop.AnnotationLog;
 import com.lisn.demo.core.ret.RetResult;
 import com.lisn.demo.core.ret.RetResponse;
 import com.lisn.demo.core.ret.ServiceException;
@@ -62,6 +63,7 @@ public class UserInfoController {
                     dataType = "Integer", paramType = "query")
     })
     @PostMapping("/selectById")
+    @AnnotationLog(remark = "查询")
     public RetResult<UserInfo> selectById(@RequestParam String id) throws Exception {
         UserInfo userInfo = userInfoService.selectById(id);
         System.out.println("selectById==" + id + " userInfo=" + userInfo);
@@ -131,6 +133,7 @@ public class UserInfoController {
     }
 
     @PostMapping("/login")
+    @AnnotationLog(remark = "登录")
     public RetResult<UserInfo> login(String userName, String password) {
         System.out.println("userName=" + userName);
         System.out.println("password=" + password);
