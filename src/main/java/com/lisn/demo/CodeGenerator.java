@@ -49,9 +49,10 @@ public class CodeGenerator {
 //        genCode("websites");
 //        genCode("user_info");
 //        genCode("user_role");
-        genCode("sys_role");
+//        genCode("sys_role");
 //        genCode("sys_perm");
 //        genCode("role_perm");
+        genCode("sys_permission_init");
     }
 
     /**
@@ -74,8 +75,8 @@ public class CodeGenerator {
      */
     public static void genCode(String tableName) {
         genModelAndMapper(tableName);
-//        genService(tableName);
-//        genController(tableName);
+        genService(tableName);
+        genController(tableName);
     }
 
     public static void genModelAndMapper(String tableName) {

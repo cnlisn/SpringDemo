@@ -1,12 +1,17 @@
 package com.lisn.demo.core.configurer;
 
 import com.lisn.demo.core.shiro.CustomRealm;
+import com.lisn.demo.model.SysPermissionInit;
+import com.lisn.demo.service.SysPermissionInitService;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 @Configuration
 public class ShiroConfigurer {
@@ -31,6 +36,10 @@ public class ShiroConfigurer {
         return creator;
     }
 
+
+    @Resource
+    private SysPermissionInitService sysPermissionInitService;
+
     /**
      * 这里统一做鉴权，即判断哪些请求路径需要用户登录，哪些请求路径不需要用户登录
      *
@@ -39,13 +48,11 @@ public class ShiroConfigurer {
     @Bean
     public ShiroFilterChainDefinition shiroFilterChainDefinition() {
         DefaultShiroFilterChainDefinition chain = new DefaultShiroFilterChainDefinition();
-//        chain.addPathDefinition("/userInfo/selectById", "authc, roles[admin]");
-        chain.addPathDefinition( "/userInfo/selectById", "authc, roles[cw]");
-        chain.addPathDefinition("/logout", "anon");
-        chain.addPathDefinition("/userInfo/selectAll", "anon");
-        chain.addPathDefinition("/userInfo/login", "anon");
-        chain.addPathDefinition("/swagger-ui.html", "anon");
-        chain.addPathDefinition("/**", "anon");
+        List<SysPermissionInit> list = sysPermissionInitService.selectAllOrderBySort();
+        for (int i = 0, length = list.size(); i < length; i++) {
+            SysPermissionInit sysPermissionInit = list.get(i);
+            chain.addPathDefinition(sysPermissionInit.getUrl(), sysPermissionInit.getPermissionInit());
+        }
         return chain;
     }
 }
