@@ -46,7 +46,12 @@ public class CodeGenerator {
      */
     public static void main(String[] args) {
 //        genCode("system_log");
-        genCode("websites");
+//        genCode("websites");
+//        genCode("user_info");
+//        genCode("user_role");
+//        genCode("sys_role");
+        genCode("sys_perm");
+        genCode("role_perm");
     }
 
     /**

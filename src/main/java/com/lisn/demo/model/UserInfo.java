@@ -2,6 +2,9 @@ package com.lisn.demo.model;
 
 import javax.persistence.*;
 
+/**
+ * 用户表
+ */
 @Table(name = "user_info")
 public class UserInfo {
     /**

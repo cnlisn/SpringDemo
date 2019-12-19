@@ -3,6 +3,9 @@ package com.lisn.demo.model;
 import java.util.Date;
 import javax.persistence.*;
 
+/**
+ * 系统日志
+ */
 @Table(name = "system_log")
 public class SystemLog {
     @Id

@@ -19,6 +19,13 @@
     </properties>
 
     <dependencies>
+
+        <!--&lt;!&ndash;添加shiro依赖&ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.shiro</groupId>-->
+            <!--<artifactId>shiro-spring-boot-web-starter</artifactId>-->
+            <!--<version>1.4.0-RC2</version>-->
+        <!--</dependency>-->
         <!--添加Jsoup依赖-->
         <dependency>
             <groupId>org.jsoup</groupId>
