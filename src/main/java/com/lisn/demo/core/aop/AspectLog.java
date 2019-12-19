@@ -2,6 +2,7 @@ package com.lisn.demo.core.aop;
 
 import com.alibaba.fastjson.JSON;
 import com.lisn.demo.core.ret.ServiceException;
+import com.lisn.demo.core.systemlog.SystemLogQueue;
 import com.lisn.demo.core.utils.ApplicationUtils;
 import com.lisn.demo.model.SystemLog;
 import com.lisn.demo.model.UserInfo;
@@ -37,8 +38,11 @@ public class AspectLog {
 
     private static final Logger logger = LoggerFactory.getLogger(AspectLog.class);
 
+    //@Resource
+    //private SystemLogService systemLogService;
+
     @Resource
-    private SystemLogService systemLogService;
+    private SystemLogQueue systemLogQueue;
 
     /**
      * 定义切点
@@ -51,8 +55,9 @@ public class AspectLog {
     public void doBefore(JoinPoint p) throws Exception {
         SystemLog systemLog = getSystemLogInit(p);
         systemLog.setLogType(SystemLog.LOGINFO);
-        logger.error("=systemLog1=" + systemLog);
-        systemLogService.insert(systemLog);
+        logger.debug("=systemLog1=" + systemLog);
+        //systemLogService.insert(systemLog);
+        systemLogQueue.add(systemLog);
     }
 
     /**
@@ -71,7 +76,8 @@ public class AspectLog {
                 systemLog.setExceptionCode(e.getClass().getName());
                 systemLog.setExceptionDetail(e.getMessage());
                 logger.error("=systemLog2=" + systemLog);
-                systemLogService.insert(systemLog);
+                //systemLogService.insert(systemLog);
+                systemLogQueue.add(systemLog);
             } catch (Exception ex) {
                 logger.error("==异常通知异常==");
                 logger.error("异常信息:{}", ex.getMessage());
@@ -100,7 +106,7 @@ public class AspectLog {
             systemLog.setParams(JSON.toJSONString(nameAndArgs));
             systemLog.setUserId(getUserId());
             systemLog.setCreateTime(new Date());
-            logger.error("=systemLog3=" + systemLog);
+            logger.debug("=systemLog3=" + systemLog);
         } catch (Exception ex) {
             logger.error("==异常通知异常==");
             logger.error("异常信息:{}", ex.getMessage());
