@@ -11,6 +11,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -108,7 +112,7 @@ public class UserInfoController {
      * @param page 页码
      * @param size 每页条数
      * @Description: 分页查询
-     * @Reutrn RetResult<PageInfo       <       UserInfo>>
+     * @Reutrn RetResult<PageInfo                               <                               UserInfo>>
      */
     @ApiOperation(value = "查询用户", notes = "分页查询用户所有")
     @ApiImplicitParams({
@@ -117,12 +121,30 @@ public class UserInfoController {
             @ApiImplicitParam(name = "size", value = "每页显示条数",
                     dataType = "Integer", paramType = "query")
     })
-    @PostMapping("/list")
+    @PostMapping("/selectAll")
     public RetResult<PageInfo<UserInfo>> list(@RequestParam(defaultValue = "0") Integer page,
                                               @RequestParam(defaultValue = "0") Integer size) throws Exception {
         PageHelper.startPage(page, size);
         List<UserInfo> list = userInfoService.selectAll();
         PageInfo<UserInfo> pageInfo = new PageInfo<UserInfo>(list);
         return RetResponse.makeOKRsp(pageInfo);
+    }
+
+    @PostMapping("/login")
+    public RetResult<UserInfo> login(String userName, String password) {
+        System.out.println("userName=" + userName);
+        System.out.println("password=" + password);
+        Subject currentUser = SecurityUtils.getSubject();
+        //登录
+        try {
+            currentUser.login(new UsernamePasswordToken(userName, password));
+        } catch (IncorrectCredentialsException i) {
+            throw new ServiceException("密码输入错误");
+        } catch (Exception e) {
+            throw new ServiceException("账号密码输入错误");
+        }
+        //从session取出用户信息
+        UserInfo user = (UserInfo) currentUser.getPrincipal();
+        return RetResponse.makeOKRsp(user);
     }
 }

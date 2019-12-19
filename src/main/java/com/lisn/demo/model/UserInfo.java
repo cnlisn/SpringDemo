@@ -1,6 +1,7 @@
 package com.lisn.demo.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * 用户表
@@ -18,6 +19,34 @@ public class UserInfo {
      */
     @Column(name = "user_name")
     private String userName;
+
+    /**
+     * 用户所有角色值，用于shiro做角色权限的判断
+     */
+    @Transient
+    private Set<String> roles;
+
+    /**
+     * 用户所有权限值，用于shiro做资源权限的判断
+     */
+    @Transient
+    private Set<String> perms;
+
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
+    }
+
+    public Set<String> getPerms() {
+        return perms;
+    }
+
+    public void setPerms(Set<String> perms) {
+        this.perms = perms;
+    }
 
     /**
      * 用户密码，经过加密之后的

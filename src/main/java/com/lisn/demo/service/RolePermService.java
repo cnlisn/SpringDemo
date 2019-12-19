@@ -3,6 +3,8 @@ package com.lisn.demo.service;
 import com.lisn.demo.model.RolePerm;
 import com.lisn.demo.core.universal.Service;
 
+import java.util.List;
+
 /**
 * @Description: RolePermService接口
 * @author SG
@@ -10,4 +12,5 @@ import com.lisn.demo.core.universal.Service;
 */
 public interface RolePermService extends Service<RolePerm> {
 
+    List<String> getPermsByUserId(String id);
 }
