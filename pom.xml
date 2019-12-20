@@ -19,48 +19,64 @@
     </properties>
 
     <dependencies>
-        <!--添加POI依赖  Excel-->
+
+        <!-- 图片处理
+       帮助文档：https://github.com/coobird/thumbnailator/wiki/Examples-->
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.8</version>
+        </dependency>
+
+        <!-- 导出excel表格
+        文档http://poi.apache.org/apidocs/index.html-->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>3.9</version>
         </dependency>
-        <!--添加mail依赖-->
+
+        <!--发送邮件-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
+
         <!--文件上传-->
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
-            <version>1.3.3</version>
+            <version>1.3.1</version>
         </dependency>
+
         <!--添加AOP依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
-        <!--添加shiro依赖-->
+        <!--shiro权限管理依赖-->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring-boot-web-starter</artifactId>
             <version>1.4.0-RC2</version>
         </dependency>
-        <!--添加Jsoup依赖-->
+
+        <!--解析html-->
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>1.10.2</version>
         </dependency>
 
-        <!--添加Redis依赖-->
+        <!--添加Redis
+         http://www.redis.net.cn/order/-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-redis</artifactId>
             <version>1.4.5.RELEASE</version>
         </dependency>
 
+        <!--freemarker模板引擎-->
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
@@ -104,12 +120,17 @@
             <version>2.3.28</version>
         </dependency>
 
+        <!--单表通用增删改查，文档地址  源码地址：https://github.com/abel533/Mapper
+        文档地址： https://mapperhelper.github.io
+        使用文档 https://github.com/abel533/Mapper/wiki-->
         <dependency>
             <groupId>tk.mybatis</groupId>
             <artifactId>mapper-spring-boot-starter</artifactId>
             <version>2.0.1</version>
         </dependency>
 
+        <!--mybatis分页依赖
+        https://github.com/pagehelper/pagehelper-spring-boot-->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
@@ -163,7 +184,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
 
     </dependencies>
 
