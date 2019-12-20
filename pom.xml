@@ -19,6 +19,11 @@
     </properties>
 
     <dependencies>
+        <!--添加mail依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
         <!--文件上传-->
         <dependency>
             <groupId>commons-fileupload</groupId>
