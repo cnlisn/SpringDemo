@@ -7,6 +7,7 @@ import com.lisn.demo.service.UserInfoService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
 * @Description: UserInfoService接口实现类
@@ -19,4 +20,8 @@ public class UserInfoServiceImpl extends AbstractService<UserInfo> implements Us
     @Resource
     private UserInfoMapper userInfoMapper;
 
+    @Override
+    public List<UserInfo> selectAlla(Integer page, Integer size) {
+        return userInfoMapper.selectAll(page,size);
+    }
 }
