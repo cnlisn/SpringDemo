@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @Scheduled为设置定时任务周期的注解
  */
-@EnableScheduling
+//@EnableScheduling
 public class tesk {
     //定时任务参数常用的为两种：
 

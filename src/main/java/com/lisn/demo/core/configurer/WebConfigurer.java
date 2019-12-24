@@ -11,9 +11,16 @@ import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+
+
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
@@ -179,6 +186,30 @@ public class WebConfigurer extends WebMvcConfigurationSupport {
                 //这里添加的是拦截的路径  /**为全部拦截
         ).addPathPatterns("/userInfo/selectAlla");
     }
+
+    //region 处理跨域问题
+    private CorsConfiguration buildConfig() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        //请求方法
+        config.addAllowedMethod("*");
+        //config.addAllowedMethod(HttpMethod.GET);
+        //config.addAllowedMethod(HttpMethod.POST);
+        //config.addAllowedMethod(HttpMethod.PUT);
+        //config.addAllowedMethod(HttpMethod.DELETE);
+        //config.addAllowedMethod(HttpMethod.OPTIONS);
+        return config;
+    }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource configSource = new UrlBasedCorsConfigurationSource();
+        //处理全部请求路径
+        configSource.registerCorsConfiguration("/**", buildConfig());
+        return new CorsFilter(configSource);
+    }
+    //endregion
 
     /**
      * @param response
